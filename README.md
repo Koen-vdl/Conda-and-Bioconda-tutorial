@@ -658,4 +658,5 @@ Did you mess up badly and feel like its better to reinstall Conda from scratch? 
 >$ rm -fr ~/anaconda* ~/miniconda* ~/.conda*
 ```
 
-**!!!WARNING!!! You will have to reinstall Conda and all your software and software environments after chosing this nuclear option.**
+## 9. Credit
+This tutorial is largely based on a similar tutorial written up by @Slugger70
