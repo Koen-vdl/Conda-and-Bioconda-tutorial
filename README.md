@@ -659,4 +659,4 @@ Did you mess up badly and feel like its better to reinstall Conda from scratch? 
 ```
 
 ## 9. Credit
-This tutorial is largely based on a similar tutorial written up by @Slugger70
+This tutorial is based on a tutorial written up by <a href="https://github.com/Slugger70">Slugger70</a>.
