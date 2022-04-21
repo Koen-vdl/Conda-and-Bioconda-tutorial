@@ -6,16 +6,16 @@ This tutorial will get you up and running with Conda and Bioconda.
 ### Today we are going to:
 
 1. Install Conda via the Miniconda distribution
-2. Learn about activation of the base conda environment
+2. Learn about activation of the base Conda environment
 3. Configure Conda with Software "Channels"
 4. Learn how to:
-    * install tools using conda
+    * install tools using Conda
     * remove tools
     * install a particular version of a tool
     * update tools
-5. How to handle version conflicts!
+5. Learn how to handle version conflicts
     * Conda environments
-6. How to use conda environments
+6. Learn how to use Conda environments
     * Create an environment
     * Add tools to an environment
     * Activate different environments
@@ -33,9 +33,7 @@ or
 (base) >$ pwd
 ```
 
-Don't type in the `>$` or the `(base) >$`! *It's just the representation of the prompt in the tutorial document...*
-
-Ok, lets go.
+Don't type in the `>$` or the `(base) >$`! It's just the representation of the prompt in the tutorial document.
 
 ## 1. Install Conda *via* the Miniconda distribution.
 
@@ -43,21 +41,20 @@ First thing we have to do is download the installer from the Miniconda documenta
 
 SSH Login to your Linux server
 
-Then from your HOME directory:
+Then from your HOME directory run:
 
 ```
 >$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 ```
 
-Now we can install it, we will use the `-b` and `-s` switches for *silent mode* and *no post install scripts* respectively.
+After the download of the installer finished we can in run it.
+We will use the `-b` and `-s` switches for *silent mode* and *no post install scripts* respectively.
 
 ```
-
 >$ sh Miniconda3-latest-Linux-x86_64.sh -b -s
-
 ```
 
-We can watch it install and show the following:
+We can watch it install and print the following to the screen:
 
 ```
 PREFIX=/home/ubuntu/miniconda3
@@ -101,9 +98,9 @@ installation finished.
 
 Now that we have installed Conda we need to be able to use it.
 
-In a very similar way to activating a Python virtual environment, we need to ***activate*** conda before we can use it.
+In a very similar way to activating a Python virtual environment, we need to ***activate*** Conda before we can use it.
 
-We do this by pointing the `source` command at the conda activate script.
+We do this by pointing the `source` command at the Conda activate script.
 
 **NOTE: You need to do this EVERY time you login to your server if you want to use tools you installed with Conda.**
 
@@ -113,30 +110,36 @@ We do this by pointing the `source` command at the conda activate script.
 
 You'll notice that your command line now has an added `(base)` in front of it. This lets you know that Conda has been activated and you can use it. Later on, when we start using other conda environments it will tell us which one we are in!
 
+In case you want to automatically activate conda whenever you log into your server: you can add the activation line to your .bash_profile file with:
+
+```
+>$ echo 'source ~/miniconda3/bin/activate' >>~/.bash_profile    
+```
+
 ## 3. Configure Conda with software "Channels"
 
 Now we want to configure Conda with some extra software channels. We especially want to tell Conda where it can find all those awesome Bioinformatics tools we really want to use are.
 
-So we need to add three "Channels" to conda's configurtation. They are:
+So we need to add three "Channels" to conda's configuration. They are:
 
 * defaults - base packages for Conda
-* bioconda - >8000 Bioinformatics tools and growing daily
-* conda-forge - has most of the dependencies for all our favourite tools
+* bioconda - >7000 Bioinformatics tools and growing daily
+* conda-forge - has most of the dependencies for all our favorite tools
 
-We add the channels with the `conda config` command. The order in which we add the channels is very important. It will determine the order in which conda will search them for the appropriate packages. It's strange but the last one we add will have the highest priority. We want `conda-forge` to have the highest priority so we add it last...
+We add the channels with the `conda config` command. The order in which we add the channels is very important. It will determine the order in which conda will search them for the appropriate packages. It's unintuitive but the last one we add will have the highest priority. We want `conda-forge` to have the highest priority so we add it last...
 
 ```
 (base) >$ conda config --add channels defaults
 (base) >$ conda config --add channels bioconda
 (base) >$ conda config --add channels conda-forge
 ```
-To check that it worked you can look at the conda configuration using:
+To check that it worked you can look at the Conda configuration using:
 
 ```
 (base) >$ conda config --show
 ```
 
-It will print out the full configuration of your conda install. If you see:
+It will print out the full configuration of your Conda install. If you see:
 
 ```
 channels:
@@ -149,11 +152,9 @@ amongst the rest of the output, you are all set!
 
 ## 4. How to:
 
-Ok, enough setup already! Lets install a tool cause I have project deadlines!
-
 ### 4.1 Install a tool
 
-Lets install samtools.. It's pretty useful..
+Lets install samtools. It's pretty useful..
 
 To do that we use the `conda install <package-name>` command.
 
@@ -163,7 +164,7 @@ To do that we use the `conda install <package-name>` command.
 
 Conda will work out all the things it needs to install as well as samtools to make sure it works.
 
-You'll see a whole lot of stuff, but then conda will ask you if you REALLY want to install `samtools`. Take note of all the other things it has to install.. Look closely, sometimes it may tell you it has to REMOVE things to be able to install what you want due to an incompatibility. We will look at how to get around these things later in section 5.
+You'll see a whole lot of stuff, but then Conda will ask you if you REALLY want to install `samtools`. Take note of all the other things it has to install.. Look closely, sometimes it may tell you it has to REMOVE things to be able to install what you want due to an incompatibility. We will look at how to get around these things later in section 5.
 
 This is what you should see:
 
@@ -418,7 +419,7 @@ Just say you need two versions of samtools installed. Samtools is used a lot as 
 
 **Yes you can!** You just need to install `tool-a` and `tool-b` in different and separate **environments** with their own set of dependencies that do not interact with one another!
 
-To create a conda environment we use the `conda create` command. We will now look at how to use environments!
+To create a Conda environment we use the `conda create` command. We will now look at how to use environments!
 
 ## 6. How to use Conda environments
 
@@ -426,7 +427,7 @@ Lets install a tool called `mlst` into it's own environment. It has a lot of dep
 
 First thing we need to do is create an *environment* for it.
 
-### 6.1 Create a conda environment
+### 6.1 Create a Conda environment
 
 We can create an environment for mlst as follows:
 
@@ -438,7 +439,7 @@ This will create an environment space called `mlst_env` that we can now **activa
 
 Before we can use our new environment, we have to **activate** it. We use the activate command.
 
-If we have already activated a conda environment (including the `base` environment) we just have to use the `conda activate <environment-name>` command.
+If we have already activated a Conda environment (including the `base` environment) we just have to use the `conda activate <environment-name>` command.
 
 However, if we haven't activated Conda yet and we know the name of the environment we want to activate then we have to source it just like we did for the original (base) environment. `source ~/miniconda3/bin/activate <environment-name>`.
 
@@ -537,4 +538,4 @@ Cool huh?
 
 ## The End.
 
-Well, that's it. Hopefully you now understand how to use conda and conda environments to install and use all of your favourite tools!
+Well, that's it. Hopefully you now understand how to use Conda and Conda environments to install and use all of your favorite tools!
