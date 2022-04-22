@@ -133,14 +133,71 @@ openjdk-8.0.121      | 47.7 MB   | #############################################
 Preparing transaction: done
 Verifying transaction: done
 Executing transaction: done
-#
-# To activate this environment, use
-#
-#     $ conda activate beast2_env
-#
-# To deactivate an active environment, use
-#
-#     $ conda deactivate
+```
+
+Now you have created beast2_env environment and install Beast2. Let's check if you have done it correctly. Bear in mind that you need to enter the environment name exactly the same as what you create (if you create your environment in CAPITAL LETTER then don't forget!)
+
+```
+conda activate beast2_env 
+```
+
+If you see your path as below, you are now ready for running a simple analysis with BEAST2.
+
+```
+(beast2_env) USER@srvlxhpc2:~$
+```
+Remember to activate your environment everytime when you need to run Beast2. It is recommnended that you should create the name of your environment for easy access and not too long. 
+
+**2. Getting the data**
+
+Before we can start running an analysis with BEAST2, as mentioned earlier, we need Beauti2 to generate BEAST2 XML configuration files. First of all, you need to have the input data containing DNA sequences of your interest in nexus or fasta format and import an alignment to Beauti2. This tutorial will guide you only how to run Beast2 so you can download *'Primates.xml'* file from this link; https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/Primates.xml by running a single command line as below.
+
+```
+wget https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/Primates.xml
+```
+When you are ready, type the command line below to check if you have the file in your directory.
+
+```
+ls
+```
+
+Now you are ready to run Beast2 but let's have a look what inside this xml file first.
+
+```
+less Primates.xml
+```
+You will notice that under the line ***data id="primate-mtDNA"***, 14 sequences and parameter settings, for example, MCMC chainlength="1000000" and storeEvery="5000", all included in .xml file. If you want to quit from viewing *'Primates.xml'* file, type 'q' (quit) then it will return to your terminal.
+
+**3. Running an analysis with BEAST2**
+
+You are now about to run an analysis for the first time with a single command line but before that we need to create a folder to save your output and move your xml file to this folder.
+
+```
+mkdir beast2
+```
+Move your *'Primates.xml'* file to beast2 folder and enter and view to your beast2 directory if your file is already there.
+``` 
+mv Primates.xml beast2
+cd beast2
+ls 
+```
+Now you are ready to run Beast2 with a single command line below. You will get a window popup to select your xml file by adding '&' to the end of your command line or you can run it without '&' to see what differences.
+
+```
+nice beast -threads 1 Primates.xml & 
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
