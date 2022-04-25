@@ -384,7 +384,7 @@ Now you reattach to your previous analysis. When the analysis is ended, you shou
 conda deactivate
 exit
 ```
-Your screen mode is terminated and you are now returned to the base environment. You can exit your terminal now or stay and do another practice for analysis !!
+Your screen mode is terminated and you are now returned to the base environment. You can exit your terminal now or stay and do another practice for analysis !!!
 
 
 
