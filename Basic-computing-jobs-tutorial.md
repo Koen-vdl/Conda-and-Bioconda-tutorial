@@ -347,12 +347,49 @@ Capabilities:
 +copy +remote-detach +power-detach +multi-attach +multi-user +font +color-256 +utf8 +rxvt +builtin-telnet
 ```
 
-Press 'Enter' again to the terminal. You will now enter to your terminal and ready to activate your base conda environment with a command below.
+Press 'Enter' again to the terminal. You will now enter to your terminal and ready to activate your conda environment with a command below.
 
 ```
 source .bash_profile
 ```
-This time we will run an analysis with 
+This time we will run an analysis with thread 3. You will use more thread than before to run your analysis and expect to the job to finish earlier than before. However, it depends on how busy of the server as other users may use the server at the same time. Please go to the folder that contains your xml file before first and DO NOT FORGET TO ACTIVATE YOUR BEAST2 ENVIRONMENT. 
+
+```
+cd beast2
+conda activate beast2_env
+nice beast -threads 3 Primates.xml
+```
+Now you can close your terminal window. Do not be panic about losing your job when closing your terminal. You have input your analysis in SCREEN mode, remember? You can resume to your session anytime you wish. Enter your terminal again and run a command below.
+
+```
+screen -list
+```
+The messages below show you how many screen you detached. 
+```
+There is a screen on:
+        1307374.pts-0.srvlxhpc2 (04/25/22 10:43:11)     (Detached)
+1 Socket in /run/screen/S-$USER.
+```
+
+
+This command will show you how many screen you you input. You can resume to the session that you previously run your Beast analysis before. Session name will be different for every users so you need to enter the one you see on your screen. 
+
+```
+screen -r $session_name
+```
+
+Now you reattach to your previous analysis. When the analysis is ended, you should deactivate your conda environment before leaving the terminal. If you want to exit the screen mode, just type 'exit'. 
+
+```
+conda deactivate
+exit
+```
+Your screen mode is terminated and you are now returned to the base environment. You can exit your terminal now or stay and do another practice for analysis !!
+
+
+
+
+
 
 
 
