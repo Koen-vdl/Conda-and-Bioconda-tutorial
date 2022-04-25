@@ -301,10 +301,15 @@ Verifying transaction: done
 Executing transaction: done
 ```
 
-Ready to have a look at your tree? If you want to run figtree, you need to run a command below. FigTree windown will be popped up then click on 'File' and 'Open' to select your ouput file (primate-mtDNA.tree). Finally, you can visualise your tree !! 
+Ready to have a look at your tree? If you want to run figtree, you need to run a command below. FigTree window will be popped up then click on 'File' and 'Open' to select your ouput file (primate-mtDNA.tree). Finally, you can visualise your tree !! 
 
 ```
 figtree
+```
+After finish viewing your tree, you can now deactivate your beast2_env environment, it will return to your base environment.
+
+```
+conda deactivate
 ```
 
 
@@ -315,6 +320,39 @@ Sometimes you may experience a long-running process and you may not want to leav
 ```
 screen
 ```
+```
+
+GNU Screen version 4.08.00 (GNU) 05-Feb-20
+
+Copyright (c) 2018-2020 Alexander Naumov, Amadeusz Slawinski
+Copyright (c) 2015-2017 Juergen Weigert, Alexander Naumov, Amadeusz Slawinski
+Copyright (c) 2010-2014 Juergen Weigert, Sadrul Habib Chowdhury
+Copyright (c) 2008-2009 Juergen Weigert, Michael Schroeder, Micah Cowan, Sadrul Habib Chowdhury
+Copyright (c) 1993-2007 Juergen Weigert, Michael Schroeder
+Copyright (c) 1987 Oliver Laumann
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
+either version 3, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program (see the file COPYING); if not, see https://www.gnu.org/licenses/, or contact
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA.
+
+Send bugreports, fixes, enhancements, t-shirts, money, beer & pizza to screen-devel@gnu.org
+
+
+Capabilities:
++copy +remote-detach +power-detach +multi-attach +multi-user +font +color-256 +utf8 +rxvt +builtin-telnet
+```
+
+Press 'Enter' again to the terminal. You will now enter to your terminal and ready to activate your base conda environment with a command below.
+
+```
+source .bash_profile
+```
+This time we will run an analysis with 
 
 
 
