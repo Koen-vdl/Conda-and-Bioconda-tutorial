@@ -123,7 +123,7 @@ Press 'Enter' again to the terminal. You will now enter to your terminal and rea
 source .bash_profile
 ```
 
-This time we will run an analysis with thread 3. You will use more thread than before to run your analysis and expect to the job to finish earlier than before. However, it depends on how busy of the server as other users may use the server at the same time. Please go to the folder that contains your xml file before first and DO NOT FORGET TO ACTIVATE YOUR BEAST2 ENVIRONMENT. 
+This time we will run an analysis with thread 3. You will use more thread than before to run your analysis and expect to the job to finish about 1-2 minutes. However, it depends on how busy of the server as other users may use the server at the same time. Please go to the folder that contains your xml file before first and DO NOT FORGET TO ACTIVATE YOUR BEAST2 ENVIRONMENT. 
 
 ```
 cd beast2
