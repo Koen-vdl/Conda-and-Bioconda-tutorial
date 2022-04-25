@@ -186,6 +186,17 @@ Now you are ready to run Beast2 with a single command line below. You will get a
 ```
 nice beast -threads 1 Primates.xml & 
 ```
+Beast2 is running and let's do 'CTRL+Z' to see what happens to the job. You will see afater you press CTRL+Z, your job is stopped on the way, CTRL+Z will undo your job and send it to the background. Let's check if there is anything running in your background. 
+
+```
+htop -u $USER
+```
+This htop command in linux system allows  you to interactively monitor the server's process in real time. If you type your username after '-u', it will show only your process. Type only 'htop again to see the difference. If you want to return to your base screen, press 'F10', your screen will return to your working screen.
+
+```
+htop
+```
+
 
 
 
