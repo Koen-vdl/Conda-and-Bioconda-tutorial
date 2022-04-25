@@ -59,18 +59,22 @@ Now you are ready to run Beast2 with a single command line below. You will get a
 ```
 nice beast -threads 1 Primates.xml & 
 ```
-Beast2 is running and let's do 'CTRL+Z' to see what happens to the job. You will see after you press CTRL+Z, your job is stopped on the way, CTRL+Z will submit your job to the background. Let's check if there is anything running in your background. 
+Beast2 is running and let's do 'CTRL+Z' to see what happens to the job. You will see after you press CTRL+Z, your job is stopped on the way, CTRL+Z will submit your job to the background. Let's check if there is anything running in your background by typing 'bg' in your terminal.
+
+```
+bg
+```
+Now it will return to your screen, beast2 is running and wait until it finishes.   
 
 ```
 htop -u $USER
 ```
+
 This htop command in linux system allows  you to interactively monitor the server's process in real time. If you type your username after '-u', it will show only your process. Type only 'htop' again to see the difference. If you want to return to your base screen, press 'F10'.
 
 ```
 htop
 ```
-
-
 
 
 **4. Analysing tree estimates and visualising your tree**
@@ -112,38 +116,13 @@ Sometimes you may experience a long-running process and you may not want to leav
 ```
 screen
 ```
-```
-
-GNU Screen version 4.08.00 (GNU) 05-Feb-20
-
-Copyright (c) 2018-2020 Alexander Naumov, Amadeusz Slawinski
-Copyright (c) 2015-2017 Juergen Weigert, Alexander Naumov, Amadeusz Slawinski
-Copyright (c) 2010-2014 Juergen Weigert, Sadrul Habib Chowdhury
-Copyright (c) 2008-2009 Juergen Weigert, Michael Schroeder, Micah Cowan, Sadrul Habib Chowdhury
-Copyright (c) 1993-2007 Juergen Weigert, Michael Schroeder
-Copyright (c) 1987 Oliver Laumann
-
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation;
-either version 3, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program (see the file COPYING); if not, see https://www.gnu.org/licenses/, or contact
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA.
-
-Send bugreports, fixes, enhancements, t-shirts, money, beer & pizza to screen-devel@gnu.org
-
-
-Capabilities:
-+copy +remote-detach +power-detach +multi-attach +multi-user +font +color-256 +utf8 +rxvt +builtin-telnet
-```
 
 Press 'Enter' again to the terminal. You will now enter to your terminal and ready to activate your conda environment with a command below.
 
 ```
 source .bash_profile
 ```
+
 This time we will run an analysis with thread 3. You will use more thread than before to run your analysis and expect to the job to finish earlier than before. However, it depends on how busy of the server as other users may use the server at the same time. Please go to the folder that contains your xml file before first and DO NOT FORGET TO ACTIVATE YOUR BEAST2 ENVIRONMENT. 
 
 ```
