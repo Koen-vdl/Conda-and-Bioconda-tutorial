@@ -186,15 +186,134 @@ Now you are ready to run Beast2 with a single command line below. You will get a
 ```
 nice beast -threads 1 Primates.xml & 
 ```
-Beast2 is running and let's do 'CTRL+Z' to see what happens to the job. You will see afater you press CTRL+Z, your job is stopped on the way, CTRL+Z will undo your job and send it to the background. Let's check if there is anything running in your background. 
+Beast2 is running and let's do 'CTRL+Z' to see what happens to the job. You will see after you press CTRL+Z, your job is stopped on the way, CTRL+Z will undo your job and send it to the background. Let's check if there is anything running in your background. 
 
 ```
 htop -u $USER
 ```
-This htop command in linux system allows  you to interactively monitor the server's process in real time. If you type your username after '-u', it will show only your process. Type only 'htop again to see the difference. If you want to return to your base screen, press 'F10', your screen will return to your working screen.
+This htop command in linux system allows  you to interactively monitor the server's process in real time. If you type your username after '-u', it will show only your process. Type only 'htop' again to see the difference. If you want to return to your base screen, press 'F10'.
 
 ```
 htop
+```
+
+
+
+
+**4. Analysing tree estimates and visualising your tree**
+
+
+In order to analyse and visualise your tree, Treeannotator and Figtree are required to install in your environment. Let's check if you have both software programs in your beast2_env environment.
+
+**Treeannotator**
+
+```
+treeannotator
+```
+Treeannotator window will be popped up if you successfully installed beast2 in  your environment because it is provided as part of the Beast2 package. This means you do not need to install it separately. This program is used to summarise the posterior sample of your trees to produce a maximum clade credibility tree. Select your input tree file (primate-mtDNA.trees) and output file location, click 'run' then you will have your output tree. 
+
+**FigTree** 
+
+You can check if you have FigTree in your environment the same way as you did before. If not, you need to install 'FigTree' for viewing your tree within beast2_env environment. You can also install the program on your base environment but it is easy for us to install in the same environment with Beast2 for visualization your tree after.
+
+```
+conda install figtree
+```
+```
+Collecting package metadata (current_repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /home/gauthier/miniconda3/envs/beast2_env
+
+  added / updated specs:
+    - figtree
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    bzip2-1.0.8                |       h7f98852_4         484 KB  conda-forge
+    ld_impl_linux-64-2.36.1    |       hea4e1c9_2         667 KB  conda-forge
+    libffi-3.4.2               |       h7f98852_5          57 KB  conda-forge
+    libnsl-2.0.0               |       h7f98852_0          31 KB  conda-forge
+    ncurses-6.3                |       h27087fc_1        1002 KB  conda-forge
+    openssl-3.0.2              |       h166bdaf_1         2.9 MB  conda-forge
+    pip-22.0.4                 |     pyhd8ed1ab_0         1.5 MB  conda-forge
+    python-3.10.4              |h2660328_0_cpython        28.6 MB  conda-forge
+    python_abi-3.10            |          2_cp310           4 KB  conda-forge
+    readline-8.1               |       h46c0cb4_0         295 KB  conda-forge
+    setuptools-62.1.0          |  py310hff52083_0         1.3 MB  conda-forge
+    sqlite-3.38.2              |       h4ff8645_0         1.5 MB  conda-forge
+    tk-8.6.12                  |       h27826a3_0         3.3 MB  conda-forge
+    tzdata-2022a               |       h191b570_0         121 KB  conda-forge
+    wheel-0.37.1               |     pyhd8ed1ab_0          31 KB  conda-forge
+    xz-5.2.5                   |       h516909a_1         343 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:        42.0 MB
+
+The following NEW packages will be INSTALLED:
+
+  bzip2              conda-forge/linux-64::bzip2-1.0.8-h7f98852_4
+  ca-certificates    conda-forge/linux-64::ca-certificates-2021.10.8-ha878542_0
+  figtree            bioconda/noarch::figtree-1.4.4-hdfd78af_1
+  ld_impl_linux-64   conda-forge/linux-64::ld_impl_linux-64-2.36.1-hea4e1c9_2
+  libffi             conda-forge/linux-64::libffi-3.4.2-h7f98852_5
+  libnsl             conda-forge/linux-64::libnsl-2.0.0-h7f98852_0
+  ncurses            conda-forge/linux-64::ncurses-6.3-h27087fc_1
+  openssl            conda-forge/linux-64::openssl-3.0.2-h166bdaf_1
+  pip                conda-forge/noarch::pip-22.0.4-pyhd8ed1ab_0
+  python             conda-forge/linux-64::python-3.10.4-h2660328_0_cpython
+  python_abi         conda-forge/linux-64::python_abi-3.10-2_cp310
+  readline           conda-forge/linux-64::readline-8.1-h46c0cb4_0
+  setuptools         conda-forge/linux-64::setuptools-62.1.0-py310hff52083_0
+  sqlite             conda-forge/linux-64::sqlite-3.38.2-h4ff8645_0
+  tk                 conda-forge/linux-64::tk-8.6.12-h27826a3_0
+  tzdata             conda-forge/noarch::tzdata-2022a-h191b570_0
+  wheel              conda-forge/noarch::wheel-0.37.1-pyhd8ed1ab_0
+  xz                 conda-forge/linux-64::xz-5.2.5-h516909a_1
+
+
+Proceed ([y]/n)? y
+
+
+Downloading and Extracting Packages
+ncurses-6.3          | 1002 KB   | ################################################################################################################################# | 100%
+libnsl-2.0.0         | 31 KB     | ################################################################################################################################# | 100%
+python-3.10.4        | 28.6 MB   | ################################################################################################################################# | 100%
+sqlite-3.38.2        | 1.5 MB    | ################################################################################################################################# | 100%
+wheel-0.37.1         | 31 KB     | ################################################################################################################################# | 100%
+ld_impl_linux-64-2.3 | 667 KB    | ################################################################################################################################# | 100%
+xz-5.2.5             | 343 KB    | ################################################################################################################################# | 100%
+openssl-3.0.2        | 2.9 MB    | ################################################################################################################################# | 100%
+setuptools-62.1.0    | 1.3 MB    | ################################################################################################################################# | 100%
+libffi-3.4.2         | 57 KB     | ################################################################################################################################# | 100%
+bzip2-1.0.8          | 484 KB    | ################################################################################################################################# | 100%
+tk-8.6.12            | 3.3 MB    | ################################################################################################################################# | 100%
+tzdata-2022a         | 121 KB    | ################################################################################################################################# | 100%
+python_abi-3.10      | 4 KB      | ################################################################################################################################# | 100%
+readline-8.1         | 295 KB    | ################################################################################################################################# | 100%
+pip-22.0.4           | 1.5 MB    | ################################################################################################################################# | 100%
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+```
+
+Ready to have a look at your tree? If you want to run figtree, you need to run a command below. FigTree windown will be popped up then click on 'File' and 'Open' to select your ouput file (primate-mtDNA.tree). Finally, you can visualise your tree !! 
+
+```
+figtree
+```
+
+
+**5. Running your analysis in SCREEN**
+
+Sometimes you may experience a long-running process and you may not want to leave your computer on for days or weeks only for running your analysis. It is recommended that you submit your analysis to the server with a command below and leave it running alone until finish. This also allows you to resume the sessions at some points whenever you want.  
+
+```
+screen
 ```
 
 
