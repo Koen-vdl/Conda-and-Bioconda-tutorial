@@ -372,7 +372,7 @@ There is a screen on:
 ```
 
 
-This command will show you how many screen you you input. You can resume to the session that you previously run your Beast analysis before. Session name will be different for every users so you need to enter the one you see on your screen. 
+This command will show you how many screen you input. You can resume to the session that you previously run your Beast analysis before. Session name will be different for every users so you need to enter the one you see on your screen. 
 
 ```
 screen -r $session_name
