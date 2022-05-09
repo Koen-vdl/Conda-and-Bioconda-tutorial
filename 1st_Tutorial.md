@@ -52,7 +52,7 @@ conda activate shovill_env
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 200 --trim --force --depth 0
 ```
 
-It will take time about 1 -2 mins to constructing your plasmid contig. Wait until it finishes and check where you are at path by typing 'pwd' (pwd = Print Working Directory) if output folder named 'contigs' is created in your path?
+It will take time about 1 -2 mins to constructing your unknown bacterial contig. Wait until it finishes and check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created in your path?
 
 ```
 pwd
@@ -62,7 +62,7 @@ Your working directory should show up in your terminal and now we will check if 
 ```
 ls
 ```
-You can check if you job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished.   
+You can check if you job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
 
 ```
 htop -u $USER
@@ -88,13 +88,12 @@ Press 'Enter' again to the terminal. You will now enter to your terminal and rea
 source .bash_profile
 ```
 
-This time we will run Shovill with thread 10 (change --cpus 1 to --cpus 10). You will use more thread than before to run your analysis and expect to the job to finish about 10 minutes. However, it depends on how busy of the server as other users may use the server at the same time. Please go to the folder that contains your xml file before first and DO NOT FORGET TO ACTIVATE YOUR SHOVILL ENVIRONMENT. Run shovill again 
+This time we will run Shovill with thread 10 (change --cpus 1 to --cpus 10). You will use more thread than before to construct your contig with Shovill and expect to the job to finish about 20 seconds. However, it depends on how busy of the server as other users may use the server at the same time. DO NOT FORGET TO ACTIVATE YOUR SHOVILL ENVIRONMENT. Notice: --outdir contigs_2 and --cpus 10 !!
 
 ```
 cd /path/to/your_reads
 conda activate shovill_env
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 10 --ram 200 --trim --force --depth 0
-
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_2 --cpus 10 --ram 200 --trim --force --depth 0
 ```
 Now you can close your terminal window. Do not be panic about losing your job when closing your terminal. You have input your analysis in SCREEN mode, remember? You can resume to your session anytime you wish. Enter your terminal again and run a command below.
 
@@ -108,14 +107,13 @@ There is a screen on:
 1 Socket in /run/screen/S-$USER.
 ```
 
-
-This command will show you how many screen you input. You can resume to the session that you previously run your shovill_run before. Session name will be different for every users so you need to enter the one you see on your screen. 
+This command will show you how many screen you input. You can resume to the session that you previously run your shovill before. Session name will be different for every users so you need to enter the one you see on your screen. 
 
 ```
 screen -r $session_name
 ```
 
-Now you reattach to your previous analysis. When the analysis is ended, you should deactivate your conda environment before leaving the terminal. If you want to exit the screen mode, just type 'exit'. 
+Now you reattach to your previous analysis. When the analysis is ended, you should deactivate your shovill_env environment before leaving the terminal. If you want to exit the screen mode, just type 'exit'. 
 
 ```
 conda deactivate
