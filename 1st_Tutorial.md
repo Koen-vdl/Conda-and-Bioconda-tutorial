@@ -74,7 +74,7 @@ This htop command in linux system allows  you to interactively monitor the serve
 htop
 ```
 
-**5. Running your analysis in SCREEN**
+**4. Running your analysis in SCREEN**
 
 Sometimes you may experience a long-running process and you may not want to leave your computer on for days or weeks only for running your analysis. It is recommended that you submit your analysis to the server with a command below and leave it running alone until finish. This also allows you to resume the sessions at some points whenever you want.  
 
