@@ -79,7 +79,14 @@ After running that command line, do you notice any error? Shovill should report 
 ```
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 4 --trim 
 ```
-Did you notice any report of time when Shovill finish? It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created?
+
+Did you notice any report of time when Shovill finish? Error again? This time Shovill reports you that it could not overwrite the output folder, the folder name 'contigs' is already existed !! What should you do next? You can change your output folder name to another name or delete your old folder or add another command to overwrite your output folder (--force). We'll change the folder name to 'contigs_1' and see what happens after.
+
+```
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_1 --cpus 1 --ram 4 --trim 
+```
+
+It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created?
 
 ```
 pwd
