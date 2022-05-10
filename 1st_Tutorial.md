@@ -67,13 +67,17 @@ Let's go to your illumina_reads folder by typing a command below.
 ```
 cd /srv/username/illumina_reads
 ```
-Now we'll use shovill to construt a contig. The command line below asking you to input reads and create output folder name where you want to locate, cpus is refered to the number of CPUs to use for running this shovill software. 
+Now we'll use shovill to construct a contig. The command line below asking you to input reads and create output folder name where you want to locate, cpus is refered to the number of CPUs to use for running this shovill software. Notice: Here we also input 'nice' in front of our command to adjust or lower prioritize our job which affect to process scheduling.
 
 ```
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram  --trim 
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 3.5 --trim 
 ```
+After running that command line, do you notice any error? Shovill should report an error due to the minimum requirement of memory for this software is at least 2GB but this pipeline is intelligent enough to detect how many RAM required for your process. Therefore, it reports you this error. Next, we will try to increase --ram and let it do the job. Write down the finish time and compare !!
 
-It will take time about 1 -2 mins to constructing your unknown bacterial contig. Wait until it finishes and check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created in your path?
+```
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 4 --trim 
+```
+Did you notice any report of time when Shovill finish? It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created?
 
 ```
 pwd
@@ -112,9 +116,9 @@ source .bash_profile
 This time we will run Shovill with thread 10 (change --cpus 1 to --cpus 10). You will use more thread than before to construct your contig with Shovill and expect to the job to finish about 20 seconds. However, it depends on how busy of the server as other users may use the server at the same time. DO NOT FORGET TO ACTIVATE YOUR SHOVILL ENVIRONMENT. Notice: --outdir contigs_2 and --cpus 10 !!
 
 ```
-cd /path/to/your_reads
+cd /srv/username/illumina_reads
 conda activate shovill_env
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_2 --cpus 10 --ram 200 --trim --force --depth 0
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_2 --cpus 10 --ram 200 --trim 
 ```
 Now you can close your terminal window. Do not be panic about losing your job when closing your terminal. You have input your analysis in SCREEN mode, remember? You can resume to your session anytime you wish. Enter your terminal again and run a command below.
 
