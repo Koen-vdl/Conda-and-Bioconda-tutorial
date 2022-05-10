@@ -86,15 +86,15 @@ Did you notice any report of time when Shovill finish? Error again? This time Sh
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_1 --cpus 1 --ram 4 --trim 
 ```
 
-It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created?
+It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs_1' is created?
 
 ```
 pwd
 ```
-Your working directory should show up in your terminal and now we will check if you have your contigs in the output folder named 'contigs'. Type the command below to see files and folders in your path directory.
+Your working directory should show up in your terminal and now we will check if you have your contigs in the output folder named 'contigs_1'. Type the command below to see files and folders in your path directory.
 
 ```
-ls
+ls /srv/username/illumina_reads/
 ```
 You can check if your job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
 
