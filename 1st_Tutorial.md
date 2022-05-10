@@ -62,7 +62,7 @@ Your working directory should show up in your terminal and now we will check if 
 ```
 ls
 ```
-You can check if you job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
+You can check if your job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
 
 ```
 htop -u $USER
