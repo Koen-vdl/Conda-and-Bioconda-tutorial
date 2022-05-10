@@ -74,7 +74,7 @@ Now we'll use shovill to construct a contig. The command line below asking you t
 ```
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 3.5 --trim 
 ```
-After running that command line, do you notice any error? Shovill should report an error due to the minimum requirement of memory for this software is at least 2GB but this pipeline is intelligent enough to detect how many RAM required for your process. Therefore, it reports you this error. Next, we will try to increase --ram and let it do the job. Write down the finish time and compare !!
+After running that command line, do you notice any error? Shovill should report an error due to the minimum requirement of memory for this software is at least 2GB but this pipeline is intelligent enough to detect how many RAM required for your process. Therefore, it reports you this error. Next, we will try to increase --ram and let it do the job. Write down the finish time and compare !! It should report you 'walltime used: xx min xx sec'.
 
 ```
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 4 --trim 
@@ -86,7 +86,7 @@ Did you notice any report of time when Shovill finish? Error again? This time Sh
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_1 --cpus 1 --ram 4 --trim 
 ```
 
-It should report you 'walltime used: xx min xx sec'. After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs_1' is created?
+After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs_1' is created?
 
 ```
 pwd
