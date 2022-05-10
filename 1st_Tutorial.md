@@ -52,17 +52,25 @@ Now you are ready to run Shovill. Remember to activate your shovill_env environm
 This shovill is De novo assembly pipeline for Illumina paired reads. Before we run the command, let's have a look at shovill options by a command below.
 
 ```
-shovill -help
+shovill --help
 ```
 
 **3. Construct your contig with Shovill**
 
-The command above showing you all the options with Shovill. We need to input our reads (R1-forward read or Read 1 FASTQ and R2-reversed read or Read 2 FASTQ), create the name of output folder (output folder name is contigs), input the number of CPUs to use (the maximum CPUs is 64, you can choose below this number of maximum CPUs), RAM usage is set as default at 16 but we want to use more RAM (200) and enable adaptor trimming by adding --trim (default: OFF).
+The command above showing you all the options with Shovill. First, we need to activate your shovill_env environment.
 
 ```
 conda activate shovill_env
+```
+Let's go to your illumina_reads folder by typing a command below. 
+
+```
 cd /srv/username/illumina_reads
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 200 --trim 
+```
+Now we'll use shovill to construt a contig. The command line below asking you to input reads and create output folder name where you want to locate, cpus is refered to the number of CPUs to use for running this shovill software. 
+
+```
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram  --trim 
 ```
 
 It will take time about 1 -2 mins to constructing your unknown bacterial contig. Wait until it finishes and check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created in your path?
