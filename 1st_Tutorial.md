@@ -24,16 +24,28 @@ Remember to activate your environment everytime when you need to run Shovill. It
 
 **2. Getting the data**
 
-Before we can start running this genome assembly, we need to copy Illumina reads (In this tutorial, we will try to construct a contig of unknown bacteria. Please go to this address /srv/rutaiwan/shred/tutorial/ and copy the reads to your path.
-When you are ready, type the command line below to check if you have the files in your directory.
+Before we can start running this genome assembly, we need to create a folder to keep our Illumina reads. Hopefully, you know by now from the previous tutorial what command that we can use to create a folder? First, we'll go to your /srv directory, and select on 'username = your name' folder then use 'mkdir' to create a folder named 'illumina_reads'. 
 
 ```
-cp /srv/rutaiwan/shred/tutorial/test_R1.fq.gz /srv/rutaiwan/shred/tutorial/test_R2.fq.gz /path/to/your_reads
+cd /srv/username
+mkdir illumina_reads
 ```
-To check if you have successfully copy those files to your path, type a command below. You should see your test_R1.fastq.gz and test_R2.fastq.gz in your directory.
+You can check if you have created this folder in your directory by using Filezilla program and go to /srv/username or you can check them on your terminal by typing a command below. You should see 'illumina_reads' folder in your directory now and go into this illumina_reads folder.
 
 ```
-ls
+ls /srv/username
+cd illumina_reads
+``` 
+Next step, we'll download Illumina reads. Remember what command we used to download something from the previous tutorial?
+
+```
+wget ////
+```
+
+To check if you have successfully copy those files to your illumina_reads folder, type a command below. You should see your test_R1.fastq.gz and test_R2.fastq.gz in the folder.
+
+```
+ls /srv/username/illumina_reads
 ```
 
 Now you are ready to run Shovill. Remember to activate your shovill_env environment first before running the command to construct your contig.
@@ -45,11 +57,12 @@ shovill -help
 
 **3. Construct your contig with Shovill**
 
-The command above showing you all the options with Shovill. We need to input our reads (R1-forward read or Read 1 FASTQ and R2-reversed read or Read 2 FASTQ), create the name of output folder (output folder name is contigs), input the number of CPUs to use (the maximum CPUs is 64, you can choose below this number of maximum CPUs), RAM usage is set as default at 16 but we want to use more RAM (200), enable adaptor trimming by adding --trim (default: OFF), force overwrite of existing output folder (--force) and no sub-sample (--depth 0).
+The command above showing you all the options with Shovill. We need to input our reads (R1-forward read or Read 1 FASTQ and R2-reversed read or Read 2 FASTQ), create the name of output folder (output folder name is contigs), input the number of CPUs to use (the maximum CPUs is 64, you can choose below this number of maximum CPUs), RAM usage is set as default at 16 but we want to use more RAM (200) and enable adaptor trimming by adding --trim (default: OFF).
 
 ```
 conda activate shovill_env
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 200 --trim --force --depth 0
+cd /srv/username/illumina_reads
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 200 --trim 
 ```
 
 It will take time about 1 -2 mins to constructing your unknown bacterial contig. Wait until it finishes and check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs' is created in your path?
