@@ -28,13 +28,13 @@ Before we can start running this genome assembly, we need to create a folder to 
 
 ```
 cd /srv/username
-mkdir illumina_reads
+mkdir tutorial
 ```
-You can check if you have created this folder in your directory by using Filezilla program and go to /srv/username or you can check them on your terminal by typing a command below. You should see 'illumina_reads' folder in your directory now and go into this illumina_reads folder.
+You can check if you have created this folder in your directory by using Filezilla program and go to /srv/username or you can check them on your terminal by typing a command below. You should see 'tutorial' folder in your directory now and go into this tutorial folder.
 
 ```
 ls /srv/username
-cd illumina_reads
+cd tutorial
 ``` 
 Next step, we'll download Illumina reads. Remember what command we used to download something from the previous tutorial?
 
@@ -45,7 +45,7 @@ wget ////
 To check if you have successfully copy those files to your illumina_reads folder, type a command below. You should see your test_R1.fastq.gz and test_R2.fastq.gz in the folder.
 
 ```
-ls /srv/username/illumina_reads
+ls /srv/username/tutorial
 ```
 
 Now you are ready to run Shovill. Remember to activate your shovill_env environment first before running the command to construct your contig.
@@ -67,7 +67,7 @@ shovill --help
 Let's go to your illumina_reads folder by typing a command below. 
 
 ```
-cd /srv/username/illumina_reads
+cd /srv/username/tutorial
 ```
 Now we'll use shovill to construct a contig. The command line below asking you to input reads and create output folder name where you want to locate, cpus is refered to the number of CPUs to use for running this shovill software. Notice: Here we also input 'nice' in front of our command to adjust or lower prioritize our job which affect to process scheduling.
 
@@ -94,7 +94,7 @@ pwd
 Your working directory should show up in your terminal and now we will check if you have your contigs in the output folder named 'contigs_1'. Type the command below to see files and folders in your path directory.
 
 ```
-ls /srv/username/illumina_reads/
+ls /srv/username/tutorial/
 ```
 You can check if your job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
 
@@ -125,7 +125,7 @@ source .bash_profile
 This time we will run Shovill with thread 10 (change --cpus 1 to --cpus 10). You will use more thread than before to construct your contig with Shovill and expect to the job to finish about 20 seconds. However, it depends on how busy of the server as other users may use the server at the same time. DO NOT FORGET TO ACTIVATE YOUR SHOVILL ENVIRONMENT. Notice: --outdir contigs_2 and --cpus 10 !!
 
 ```
-cd /srv/username/illumina_reads
+cd /srv/username/tutorial
 conda activate shovill_env
 nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_2 --cpus 10 --ram 200 --trim 
 ```
