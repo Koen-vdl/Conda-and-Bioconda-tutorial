@@ -49,7 +49,14 @@ ls /srv/username/illumina_reads
 ```
 
 Now you are ready to run Shovill. Remember to activate your shovill_env environment first before running the command to construct your contig.
-This shovill is De novo assembly pipeline for Illumina paired reads. Before we run the command, let's have a look at shovill options by a command below.
+This shovill is De novo assembly pipeline for Illumina paired reads. 
+
+The command above showing you all the options with Shovill. First, we need to activate your shovill_env environment.
+
+```
+conda activate shovill_env
+```
+Before we run the command, let's have a look at shovill options by a command below.
 
 ```
 shovill --help
@@ -57,11 +64,6 @@ shovill --help
 
 **3. Construct your contig with Shovill**
 
-The command above showing you all the options with Shovill. First, we need to activate your shovill_env environment.
-
-```
-conda activate shovill_env
-```
 Let's go to your illumina_reads folder by typing a command below. 
 
 ```
