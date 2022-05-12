@@ -1,4 +1,4 @@
-# Basic-computing-jobs-tutorial
+# Running your first interactive jobs
 
 In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use real world bioinformatic examples. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
 
