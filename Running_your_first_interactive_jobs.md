@@ -73,7 +73,7 @@ Wait, something went wrong, `shovill` is *smart* enough to realise we haven't al
 [shovill] Invalid --ram 1 - need at least 2
 ```
 
-You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentiones the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation uses 16 GB of memory as default when `--ram` is not specified by the user.
+You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentiones the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation mentions the pipeline uses 16 GB of memory by default when `--ram` is not specified by the user.
 
 Lets make another attempt to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` with 4GB of RAM:
 
@@ -157,7 +157,7 @@ You can inspect your own running jobs with:
 htop -u $USER
 ```
 
-Notice the PR (Priority) and NI (Niceness) columns in htop. A nice value is user-specified and determines a job's priority. Why worry about the priority of your processes? Some of your long CPU-intensive jobs may be not as important as those of other users. You can be *nice* by adding `nice` in front of all your non-inportant jobs to give them lower priority. 
+Notice the PR (Priority) and NI (Niceness) columns in `htop`. A nice value is user-specified and determines a job's priority. Why worry about the priority of your processes? Some of your long CPU-intensive jobs may be not as important as those of other users. You can be *nice* by adding `nice` in front of all your non-inportant jobs to give them lower priority. 
 
 
 To run the `shovill` assembly job again in *low-priority mode* using `nice` you would run it like:
@@ -170,7 +170,7 @@ nice shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --fo
 
 A loss of connection or closing of the terminal unintentionally terminates the process you were working on. This can be disastrous when you are in the middle of a long job or when you were moving or coping large files. The `screen` command is very useful to avoid such situations.  Once the terminal is activated using `screen` anything in that terminal stays running even if you log out. This is a perfect solution for running long jobs on the server. 
 
-Let's configure `screen` first by running the following two cryptic commands (a single time) to: instruct `screen` to always treat your shell as a login shell and not displat a credit page when using the software (the details of this are not important now).
+Let's configure `screen` first by running the following two cryptic commands (a single time) to: instruct `screen` to always treat your shell as a login shell and not display a credit page when using the software (the details of this are not important now).
 
 ```
 echo 'shell -$SHELL' >> ~/.screenrc
@@ -210,7 +210,7 @@ You must be tired running the same `shovill` job again but let's run it one last
 shovill --R1 real_R1.fq.gz --R2 real_R2.fq.gz --outdir assembly_job_3  --force --cpus 10 --ram 20 &
 ```
 
-This is job should take about XXX minutes. You want shut down your laptop and go back to your office now right? Well just press the key combination `CTRL + A` followed by `CTRL + D`. This will detach you from your screen (your job remains running). Now go back to your office and check on your job in 30 min or so by powering on your laptop, opening a new terminal window and *re-attaching* your screen with:
+This is job should take about 6 minutes. You want shut down your laptop and go back to your office now right? Well just press the key combination `CTRL + A` followed by `CTRL + D`. This will detach you from your screen (your job remains running). Now go back to your office and check on your job in 10 min or so by powering on your laptop, opening a new terminal window and *re-attaching* your screen with:
 
 ```
 screen -r
