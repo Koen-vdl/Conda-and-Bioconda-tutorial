@@ -1,156 +1,246 @@
 # Basic-computing-jobs-tutorial
 
-This tutorial will get you up and running with Shovill (https://github.com/tseemann/shovill), Assemble bacterial isolate genomes from Illumina paired-end reads. In this tutorial, you will get acquaninted with the basic workflow starting from a scratch (installation and setup your environment with conda. 
-After Shovill installation successfully, you will have to activate your environment in order to use your software. Perhaps you may have more questions after. Let's start setting up Shovill! 
+In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use real world bioinformatic examples. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline and identify AMR genes and resistance-associated point mutations in those contigs using the <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> tool. While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
 
-**1. Setting up Shovill environment**
-```
-conda create -n shovill_env shovill --all -y
-```
-This command line will generate a working environment as following the name 'shovill_env' and install Shovill to your shovill_env environment.
 
-Now you have created shovill_env environment and install Shovill. Let's check if you have done it correctly. Bear in mind that you need to enter the environment name exactly the same as what you create (if you create your environment in CAPITAL LETTER then don't forget!)
+**1. Setting up software environments and copying over tutorial data**
+
+We will start by installing the required software environments using Conda as in the previous tutorial:
+
+```
+conda create -n shovill_env shovill -y
+conda create -n amrfinderplus_env  ncbi-amrfinderplus -y
+```
+
+Notice we added the `-y` argument to the conda installation command. This will skip the confirmation step during installation. We use this approach to win time during the tutorial. I normally would suggest you not to pass the confirmation step as it always has important info regarding the installation like which dependency will be installed or downgraded.
+
+We also need to copy over a *Salmonella enterica subsp. enterica* serovar Paratyphi A paired-end read-set to play with. To save time during the tutorial we produced artificial reads of 1/4th of a real Paratyphi genome. Let's first create a tutorial folder in your personal `/srv/` space and copy the `test_R1.fq.gz` and `test_R2.fq.gz` files into it:
+
+```
+mkdir /srv/$USER/tutorial_intro_to_comp_biology
+cd /srv/$USER/tutorial_intro_to_comp_biology
+cp /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/test_R1.fq.gz /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/test_R2.fq.gz .
+```
+
+Notice we use the `$USER` environment variable here to make the tutorial work for every participant. This environment variable contains your user name. You can print the value of the environment variable to the console with:
+
+```
+echo $USER
+```
+
+You can check if creating the folder and copying the files into it worked out with:
+
+```
+ls -l /srv/$USER/tutorial_intro_to_comp_biology
+```
+
+This will print the contents of the folder in the long listing format `-l`:
+
+```
+total 18476
+-rw-rw-r-- 1 test test 9597932 May 11 14:30 test_R2.fq.gz
+-rw-rw-r-- 1 test test 9316486 May 11 14:30 test_R1.fq.gz
+```
+
+Alternatively, you can check the contents of the folder by navigating to it in your FileZilla sftp-client.
+
+**2. Running your first interactive jobs**
+
+Activate the conda `shovill` environment with:
 
 ```
 conda activate shovill_env 
 ```
 
-If you see your path as below, you are now ready for assembling your bacterial isolate genomes with Shovill.
-
-```
-(shovill_env) USER@srvlxhpc2:~$
-```
-Remember to activate your environment everytime when you need to run Shovill. It is recommnended that you should create the name of your environment for easy access and not too long. 
-
-**2. Getting the data**
-
-Before we can start running this genome assembly, we need to create a folder to keep our Illumina reads. Hopefully, you know by now from the previous tutorial what command that we can use to create a folder? First, we'll go to your /srv directory, and select on 'username = your name' folder then use 'mkdir' to create a folder named 'illumina_reads'. 
-
-```
-cd /srv/username
-mkdir tutorial
-```
-You can check if you have created this folder in your directory by using Filezilla program and go to /srv/username or you can check them on your terminal by typing a command below. You should see 'tutorial' folder in your directory now and go into this tutorial folder.
-
-```
-ls /srv/username
-cd tutorial
-``` 
-Next step, we'll download Illumina reads. Remember what command we used to download something from the previous tutorial?
-
-```
-wget ////
-```
-
-To check if you have successfully copy those files to your illumina_reads folder, type a command below. You should see your test_R1.fastq.gz and test_R2.fastq.gz in the folder.
-
-```
-ls /srv/username/tutorial
-```
-
-Now you are ready to run Shovill. Remember to activate your shovill_env environment first before running the command to construct your contig.
-This shovill is De novo assembly pipeline for Illumina paired reads. 
-
-The command above showing you all the options with Shovill. First, we need to activate your shovill_env environment.
-
-```
-conda activate shovill_env
-```
-Before we run the command, let's have a look at shovill options by a command below.
+Before you run any software/pipeline, its important to first read through the software documentation to ensure you understand the different inputs, outputs, and analysis options. Many bioinformatics programs have extensive documentation online, either through their GitHub or another website. The basic documentation for most tools can be accessed using the command-line help options which you can print to the screen with the `--help` option. You could take a quick look at the `shovill` documentation with:
 
 ```
 shovill --help
 ```
 
-**3. Construct your contig with Shovill**
-
-Let's go to your illumina_reads folder by typing a command below. 
+We will *attempt* to assemble `test_R1.fq.gz` and `test_R2.fq.gz` to contigs using 1 CPU thread and 1 GB of RAM memory with:
 
 ```
-cd /srv/username/tutorial
-```
-Now we'll use shovill to construct a contig. The command line below asking you to input reads and create output folder name where you want to locate, cpus is refered to the number of CPUs to use for running this shovill software. Notice: Here we also input 'nice' in front of our command to adjust or lower prioritize our job which affect to process scheduling.
-
-```
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 3.5 --trim 
-```
-After running that command line, do you notice any error? Shovill should report an error due to the minimum requirement of memory for this software is at least 2GB but this pipeline is intelligent enough to detect how many RAM required for your process. Therefore, it reports you this error. Next, we will try to increase --ram and let it do the job. Write down the finish time and compare !! It should report you 'walltime used: xx min xx sec'.
-
-```
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs --cpus 1 --ram 4 --trim 
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1 --force --cpus 1 --ram 1  
 ```
 
-Did you notice any report of time when Shovill finish? Error again? This time Shovill reports you that it could not overwrite the output folder, the folder name 'contigs' is already existed !! What should you do next? You can change your output folder name to another name or delete your old folder or add another command to overwrite your output folder (--force). We'll change the folder name to 'contigs_1' and see what happens after.
+Wait, something went wrong, `shovill` is *smart* enough to realise we haven't allocated enough RAM memory to it and prints the following error to the screen: 
 
 ```
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_1 --cpus 1 --ram 4 --trim 
+[shovill] Invalid --ram 1 - need at least 2
 ```
 
-After finish, check what directory you are by typing 'pwd' (pwd = Print Working Directory) and check if output folder named 'contigs_1' is created?
+You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentiones the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation uses 16 GB of memory as default when `--ram` is not specified by the user.
+
+Lets make another attempt to assemble `test_R1.fq.gz` and `test_R2.fq.gz` with 4GB of RAM:
 
 ```
-pwd
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 4 
 ```
-Your working directory should show up in your terminal and now we will check if you have your contigs in the output folder named 'contigs_1'. Type the command below to see files and folders in your path directory.
+
+The job should finish to completion this time. Take note of the amount of time `shovill` took to finish by writing down the *walltime* (7'th last line printed to the screen).
+
+Lets now allocate more memory to `shovill` by giving it 20GB of RAM:
 
 ```
-ls /srv/username/tutorial/
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 20 
 ```
-You can check if your job has been completely finished by running a command below. Now it should show on your terminal that no such job submitted, shovill is already finished. Or you can run shovill again and open a new terminal window and type a command below to see what is happening.    
+
+Take note of the new walltime. Notice any difference? Adding excessive amounts of RAM doesn't speed programs up, it only does so when you didn't give a program enough memory to begin with. In that case the program will have to `swap` enormous amounts of code and data to the hard drive (which slows things down) to free up RAM for the executing code.
+
+As the `shovill` pipeline includes steps that can use multiple threads we will try to speed up the program by running it a third time with 10 threads. 
+
+```
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 
+```
+
+Write down the walltime again to compare the time-gains made by allocating more computer threads to your job. Impressive right?
+
+
+
+**3. Understanding the job control commands **
+
+Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabeling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
+
+```
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+```
+
+Notice that during the time the shovill job was running your terminal was *locked*. Your next command (your name) was only executed after the shovill job finished!
+
+To prevent locking up your terminal you can run a job in the *background* by entering an ampersand `&` symbol at the end of the command. This runs the command without occupying or locking the terminal window. The shell prompt is displayed immediately after you press Return.
+
+
+To illustrate this lets run `shovill` once more but this time in the background:
+
+```
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1 --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+```
+
+Kinda nice not to lock up your terminal anymore right?
+
+We can use what we just learned to run multiple jobs simultaniously. Let's execute the `shovill` job 2 times simultaneously in the background. We will follow up all jobs running in the background with the command `jobs`. 
+
+```
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+jobs
+
+```
+
+Pretty sweet right? Let's now imagine the shovill job would take 24h to finish and we just started it with a wrong option! Luckely we can stop a running job with the key combination `CTRL + C`. Try that now with the below command: run it and kill immediately it with `CTRL + C`.
+
+```
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+```
+
+**4. Monitoring your jobs**
+
+Once you have an analysis running, its important to monitor your software to determine whether it is effectively utilizing the computational resources you have allocated to it. Understanding what resources your pipeline utilizes can help you scale up/down your compute so that you are not wasting resources or hitting resource limits that may slow down your pipeline. Many bioinformatic pipelines are “bursty” in nature, meaning different steps in a single pipeline may have vastly different computing requirements. Some steps/tools may have high memory requirements but only utilise a small number of threads, while others may multithread quite well across a large number of threads but require minimal memory.
+
+A great way to monitor the computational resources your jobs use are simple programs like <a href="https://hisham.hm/htop/">htop</a> that allow fast real-time monitoring of basic metrics like CPU thread and RAM usage using graphs made of Unicode characters.
+
+Take a look at `htop` now: you might spot colleagues running their `shovill` jobs. 
+The program shows a frequently updated list of all the processes currently running on the server, normally ordered by the amount of CPU usage.
+
+```
+htop
+```
+Press the `q` key or `F10` to quit htop.
+
+`htop` is interactive via mouse (!) and keyboard. Try sorting on memory usage by clicking on the `MEM%` column header. 
+
+You can inspect your own running jobs with:
 
 ```
 htop -u $USER
 ```
 
-This htop command in linux system allows  you to interactively monitor the server's process in real time. If you type your username after '-u', it will show only your process. Type only 'htop' again to see the difference. If you want to return to your base screen, press 'F10'.
+Notice the PR (Priority) and NI (Niceness) columns in htop. A nice value is user-specified and determines a job's priority. Why worry about the priority of your processes? Some of your long CPU-intensive jobs may be not as important as those of other users. You can be *nice* by adding `nice` in front of all your non-inportant jobs to give them lower priority. 
+
+
+To run the `shovill` assembly job again in *low-priority mode* using `nice` you would run it like:
 
 ```
-htop
+nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
 ```
 
-**4. Running your analysis in SCREEN**
+**5. Running your analysis in SCREEN**
 
-Sometimes you may experience a long-running process and you may not want to leave your computer on for days or weeks only for running your analysis. It is recommended that you submit your analysis to the server with a command below and leave it running alone until finish. This also allows you to resume the sessions at some points whenever you want.  
+A loss of connection or closing of the terminal unintentionally terminates the process you were working on. This can be disastrous when you are in the middle of a long job or when you were moving or coping large files. The `screen` command is very useful to avoid such situations.  Once the terminal is activated using `screen` anything in that terminal stays running even if you log out. This is a perfect solution for running long jobs on the server. 
 
-```
-screen
-```
-
-Press 'Enter' again to the terminal. You will now enter to your terminal and ready to activate your conda environment with a command below.
+Let's configure `screen` first by running the following two cryptic commands (a single time) to: instruct `screen` to always treat your shell as a login shell and not displat a credit page when using the software (the details of this are not important now).
 
 ```
-source .bash_profile
+echo 'shell -$SHELL' >> ~/.screenrc
+echo 'startup_message off' >> ~/.screenrc
 ```
 
-This time we will run Shovill with thread 10 (change --cpus 1 to --cpus 10). You will use more thread than before to construct your contig with Shovill and expect to the job to finish about 20 seconds. However, it depends on how busy of the server as other users may use the server at the same time. DO NOT FORGET TO ACTIVATE YOUR SHOVILL ENVIRONMENT. Notice: --outdir contigs_2 and --cpus 10 !!
+Start your first *screen session* with the name 'tutorial' with:
 
 ```
-cd /srv/username/tutorial
-conda activate shovill_env
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir contigs_2 --cpus 10 --ram 200 --trim 
+screen -S tutorial
 ```
-Now you can close your terminal window. Do not be panic about losing your job when closing your terminal. You have input your analysis in SCREEN mode, remember? You can resume to your session anytime you wish. Enter your terminal again and run a command below.
+
+Notice that when you start a screen session it's like you just opened a new terminal window so you're back in your base conda environment: you will need to activate the `shovill` environment again with:
+
+```
+conda activate shovill_env 
+```
+
+You can check your `screen` sessions with:
 
 ```
 screen -list
 ```
-The messages below show you how many screen you detached. 
+
+This will print all your screen sessions. You should see one session you are currently *attached* to named *******.tutorial
+
 ```
 There is a screen on:
-        1307374.pts-0.srvlxhpc2 (04/25/22 10:43:11)     (Detached)
-1 Socket in /run/screen/S-$USER.
+        1893068.tutorial        (05/12/2022 10:34:36 PM)        (Attached)
+1 Socket in /run/screen/S-test.
 ```
 
-This command will show you how many screen you input. You can resume to the session that you previously run your shovill before. Session name will be different for every users so you need to enter the one you see on your screen. 
+
+You must be tired running the same `shovill` job again but let's do it one last time:
 
 ```
-screen -r $session_name
+shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4
 ```
 
-Now you reattach to your previous analysis. When the analysis is ended, you should deactivate your shovill_env environment before leaving the terminal. If you want to exit the screen mode, just type 'exit'. 
+Let's imagine again this is a 24h job. You want shut down your laptop and go home now right? Well just press the key combination `CTRL + A` followed by `CTRL + D`. This will detach you from your screen (your 24 job remains running). Now go home and check on your 24h job the next morning by *re-attaching* your screen with:
 
 ```
-conda deactivate
+screen -r
+```
+
+When your job finishes you can kill your screen session with `exit`
+
+```
 exit
 ```
-Your screen mode is terminated and you are now returned to the base environment. You can exit your terminal now or stay and do another practice for analysis !!!
+When you now check on your screen sessions there should be non listed:
+
+```
+screen -list
+```
+
+Running AMRFinderPlus ?????????????
+
+
+**5. Cleaning up after yourself**
+
+Running the following command will remove index cache, lock files, unused cache packages, and tarballs. This will free up a lot of storage space and won't affect your software environments in any way.
+
+```
+conda clean --all -y
+```
+
+In case you won't be needing `shovill` or `amrfinderplus` in the future you can delete these environments with:
+
+```
+conda remove -n shovill_env --all -y 
+conda remove -n amrfinderplus_env --all -y
+```
+
