@@ -1,6 +1,6 @@
 # Basic-computing-jobs-tutorial
 
-In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use real world bioinformatic examples. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline and identify AMR genes and resistance-associated point mutations in those contigs using the <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> tool. While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
+In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use real world bioinformatic examples. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
 
 
 **1. Setting up software environments and copying over tutorial data**
@@ -9,17 +9,16 @@ We will start by installing the required software environments using Conda as in
 
 ```
 conda create -n shovill_env shovill -y
-conda create -n amrfinderplus_env  ncbi-amrfinderplus -y
 ```
 
 Notice we added the `-y` argument to the conda installation command. This will skip the confirmation step during installation. We use this approach to win time during the tutorial. I normally would suggest you not to pass the confirmation step as it always has important info regarding the installation like which dependency will be installed or downgraded.
 
-We also need to copy over a *Salmonella enterica subsp. enterica* serovar Paratyphi A paired-end read-set to play with. To save time during the tutorial we produced artificial reads of 1/4th of a real Paratyphi genome. Let's first create a tutorial folder in your personal `/srv/` space and copy the `test_R1.fq.gz` and `test_R2.fq.gz` files into it:
+We also need to copy over a *real* *Salmonella enterica subsp. enterica* serovar Paratyphi A paired-end read-set to play with. To save time during the tutorial we also produced artificial *fake* reads of a small fragment of the *real* Paratyphi genome. Let's first create a tutorial folder in your personal `/srv/` space and copy the `fake_R1.fq.gz`, `fake_R2.fq.gz`, `real_R1.fq.gz`, and `real_R2.fq.gz`files into it:
 
 ```
 mkdir /srv/$USER/tutorial_intro_to_comp_biology
 cd /srv/$USER/tutorial_intro_to_comp_biology
-cp /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/test_R1.fq.gz /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/test_R2.fq.gz .
+cp /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/*.fq.gz .
 ```
 
 Notice we use the `$USER` environment variable here to make the tutorial work for every participant. This environment variable contains your user name. You can print the value of the environment variable to the console with:
@@ -37,9 +36,13 @@ ls -l /srv/$USER/tutorial_intro_to_comp_biology
 This will print the contents of the folder in the long listing format `-l`:
 
 ```
-total 18476
--rw-rw-r-- 1 test test 9597932 May 11 14:30 test_R2.fq.gz
--rw-rw-r-- 1 test test 9316486 May 11 14:30 test_R1.fq.gz
+total 220248
+-rw-rw-r-- 1 test test   9316486 May 12 23:11 fake_R1.fq.gz
+-rw-rw-r-- 1 test test   9597932 May 12 23:11 fake_R2.fq.gz
+-rw-rw-r-- 1 test test 187692588 May 12 23:11 real_R1.fq.gz
+-rw-rw-r-- 1 test test   9316486 May 11 14:30 test_R1.fq.gz
+-rw-rw-r-- 1 test test   9597932 May 11 14:30 test_R2.fq.gz
+
 ```
 
 Alternatively, you can check the contents of the folder by navigating to it in your FileZilla sftp-client.
@@ -58,10 +61,10 @@ Before you run any software/pipeline, its important to first read through the so
 shovill --help
 ```
 
-We will *attempt* to assemble `test_R1.fq.gz` and `test_R2.fq.gz` to contigs using 1 CPU thread and 1 GB of RAM memory with:
+We will *attempt* to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` to contigs using 1 CPU thread and 1 GB of RAM memory with:
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1 --force --cpus 1 --ram 1  
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --cpus 1 --ram 1  
 ```
 
 Wait, something went wrong, `shovill` is *smart* enough to realise we haven't allocated enough RAM memory to it and prints the following error to the screen: 
@@ -72,10 +75,10 @@ Wait, something went wrong, `shovill` is *smart* enough to realise we haven't al
 
 You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentiones the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation uses 16 GB of memory as default when `--ram` is not specified by the user.
 
-Lets make another attempt to assemble `test_R1.fq.gz` and `test_R2.fq.gz` with 4GB of RAM:
+Lets make another attempt to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` with 4GB of RAM:
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 4 
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 4 
 ```
 
 The job should finish to completion this time. Take note of the amount of time `shovill` took to finish by writing down the *walltime* (7'th last line printed to the screen).
@@ -83,27 +86,25 @@ The job should finish to completion this time. Take note of the amount of time `
 Lets now allocate more memory to `shovill` by giving it 20GB of RAM:
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 20 
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 20 
 ```
 
-Take note of the new walltime. Notice any difference? Adding excessive amounts of RAM doesn't speed programs up, it only does so when you didn't give a program enough memory to begin with. In that case the program will have to `swap` enormous amounts of code and data to the hard drive (which slows things down) to free up RAM for the executing code.
+Take note of the new walltime. Notice any difference? Adding excessive amounts of RAM doesn't speed programs up, it only does so when you didn't give a program enough memory to begin with. In that case the program will have to *swap* enormous amounts of code and data to the hard drive (which slows things down) to free up RAM for the executing code.
 
 As the `shovill` pipeline includes steps that can use multiple threads we will try to speed up the program by running it a third time with 10 threads. 
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 
 ```
 
 Write down the walltime again to compare the time-gains made by allocating more computer threads to your job. Impressive right?
 
-
-
-**3. Understanding the job control commands **
+**3. Understanding the job control commands**
 
 Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabeling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
 ```
 
 Notice that during the time the shovill job was running your terminal was *locked*. Your next command (your name) was only executed after the shovill job finished!
@@ -114,7 +115,7 @@ To prevent locking up your terminal you can run a job in the *background* by ent
 To illustrate this lets run `shovill` once more but this time in the background:
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1 --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --cpus 10 --ram 4 > /dev/null 2>&1 &
 ```
 
 Kinda nice not to lock up your terminal anymore right?
@@ -122,8 +123,8 @@ Kinda nice not to lock up your terminal anymore right?
 We can use what we just learned to run multiple jobs simultaniously. Let's execute the `shovill` job 2 times simultaneously in the background. We will follow up all jobs running in the background with the command `jobs`. 
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
 jobs
 
 ```
@@ -131,7 +132,7 @@ jobs
 Pretty sweet right? Let's now imagine the shovill job would take 24h to finish and we just started it with a wrong option! Luckely we can stop a running job with the key combination `CTRL + C`. Try that now with the below command: run it and kill immediately it with `CTRL + C`.
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
 ```
 
 **4. Monitoring your jobs**
@@ -162,7 +163,7 @@ Notice the PR (Priority) and NI (Niceness) columns in htop. A nice value is user
 To run the `shovill` assembly job again in *low-priority mode* using `nice` you would run it like:
 
 ```
-nice shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+nice shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
 ```
 
 **5. Running your analysis in SCREEN**
@@ -194,7 +195,7 @@ You can check your `screen` sessions with:
 screen -list
 ```
 
-This will print all your screen sessions. You should see one session you are currently *attached* to named *******.tutorial
+This will print all your screen sessions. You should see one session you are currently *attached* to named -------.tutorial
 
 ```
 There is a screen on:
@@ -203,13 +204,13 @@ There is a screen on:
 ```
 
 
-You must be tired running the same `shovill` job again but let's do it one last time:
+You must be tired running the same `shovill` job again but let's run it one last time with the *real* data. Notice the real read-set is about ten times the size of the fake set so this job will take longer to finish.
 
 ```
-shovill --R1 test_R1.fq.gz --R2 test_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4
+shovill --R1 real_R1.fq.gz --R2 real_R2.fq.gz --outdir assembly_job_3  --force --cpus 10 --ram 20 &
 ```
 
-Let's imagine again this is a 24h job. You want shut down your laptop and go home now right? Well just press the key combination `CTRL + A` followed by `CTRL + D`. This will detach you from your screen (your 24 job remains running). Now go home and check on your 24h job the next morning by *re-attaching* your screen with:
+This is job should take about XXX minutes. You want shut down your laptop and go back to your office now right? Well just press the key combination `CTRL + A` followed by `CTRL + D`. This will detach you from your screen (your job remains running). Now go back to your office and check on your job in 30 min or so by powering on your laptop, opening a new terminal window and *re-attaching* your screen with:
 
 ```
 screen -r
@@ -220,14 +221,12 @@ When your job finishes you can kill your screen session with `exit`
 ```
 exit
 ```
+
 When you now check on your screen sessions there should be non listed:
 
 ```
 screen -list
 ```
-
-Running AMRFinderPlus ?????????????
-
 
 **5. Cleaning up after yourself**
 
@@ -237,10 +236,9 @@ Running the following command will remove index cache, lock files, unused cache 
 conda clean --all -y
 ```
 
-In case you won't be needing `shovill` or `amrfinderplus` in the future you can delete these environments with:
+In case you won't be needing `shovill` in the future you can delete these environments with:
 
 ```
 conda remove -n shovill_env --all -y 
-conda remove -n amrfinderplus_env --all -y
 ```
 
