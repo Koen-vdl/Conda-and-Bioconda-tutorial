@@ -55,7 +55,7 @@ Activate the conda `shovill` environment with:
 conda activate shovill_env 
 ```
 
-Before you run any software/pipeline, its important to first read through the software documentation to ensure you understand the different inputs, outputs, and analysis options. Many bioinformatics programs have extensive documentation online, either through their GitHub or another website. The basic documentation for most tools can be accessed using the command-line help options which you can print to the screen with the `--help` option. You could take a quick look at the `shovill` documentation with:
+Before you run any software/pipeline, it's important to first read through the software documentation to ensure you understand the different inputs, outputs, and analysis options. Many bioinformatics programs have extensive documentation online, either through their GitHub or another website. The basic documentation for most tools can be accessed using the command-line help options which you can print to the screen with the `--help` option. You could take a quick look at the `shovill` documentation with:
 
 ```
 shovill --help
@@ -67,13 +67,13 @@ We will *attempt* to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` to contigs usi
 shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --cpus 1 --ram 1  
 ```
 
-Wait, something went wrong, `shovill` is *smart* enough to realise we haven't allocated enough RAM memory to it and prints the following error to the screen: 
+Wait, something went wrong, `shovill` is *smart* enough to realize we haven't allocated enough RAM memory to it and prints the following error to the screen: 
 
 ```
 [shovill] Invalid --ram 1 - need at least 2
 ```
 
-You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentiones the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation mentions the pipeline uses 16 GB of memory by default when `--ram` is not specified by the user.
+You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentions the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation mentions the pipeline uses 16 GB of memory by default when `--ram` is not specified by the user.
 
 Lets make another attempt to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` with 4GB of RAM:
 
@@ -101,7 +101,7 @@ Write down the walltime again to compare the time-gains made by allocating more 
 
 **3. Understanding the job control commands**
 
-Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabeling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
+Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
 
 ```
 shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
@@ -120,7 +120,7 @@ shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --
 
 Kinda nice not to lock up your terminal anymore right?
 
-We can use what we just learned to run multiple jobs simultaniously. Let's execute the `shovill` job 2 times simultaneously in the background. We will follow up all jobs running in the background with the command `jobs`. 
+We can use what we just learned to run multiple jobs simultaneously. Let's execute the `shovill` job 2 times simultaneously in the background. We will follow up all jobs running in the background with the command `jobs`. 
 
 ```
 shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
@@ -129,7 +129,7 @@ jobs
 
 ```
 
-Pretty sweet right? Let's now imagine the shovill job would take 24h to finish and we just started it with a wrong option! Luckely we can stop a running job with the key combination `CTRL + C`. Try that now with the below command: run it and kill immediately it with `CTRL + C`.
+Pretty sweet right? Let's now imagine the shovill job would take 24h to finish and we just started it with a wrong option! Luckily we can stop a running job with the key combination `CTRL + C`. Try that now with the below command: run it and kill immediately it with `CTRL + C`.
 
 ```
 shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
@@ -137,7 +137,7 @@ shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force -
 
 **4. Monitoring your jobs**
 
-Once you have an analysis running, its important to monitor your software to determine whether it is effectively utilizing the computational resources you have allocated to it. Understanding what resources your pipeline utilizes can help you scale up/down your compute so that you are not wasting resources or hitting resource limits that may slow down your pipeline. Many bioinformatic pipelines are “bursty” in nature, meaning different steps in a single pipeline may have vastly different computing requirements. Some steps/tools may have high memory requirements but only utilise a small number of threads, while others may multithread quite well across a large number of threads but require minimal memory.
+Once you have an analysis running, it's important to monitor your software to determine whether it is effectively utilizing the computational resources you have allocated to it. Understanding what resources your pipeline utilizes can help you scale up/down your compute so that you are not wasting resources or hitting resource limits that may slow down your pipeline. Many bioinformatic pipelines are “bursty” in nature, meaning different steps in a single pipeline may have vastly different computing requirements. Some steps/tools may have high memory requirements but only utilize a small number of threads, while others may multithread quite well across a large number of threads but require minimal memory.
 
 A great way to monitor the computational resources your jobs use are simple programs like <a href="https://hisham.hm/htop/">htop</a> that allow fast real-time monitoring of basic metrics like CPU thread and RAM usage using graphs made of Unicode characters.
 
@@ -157,7 +157,7 @@ You can inspect your own running jobs with:
 htop -u $USER
 ```
 
-Notice the PR (Priority) and NI (Niceness) columns in `htop`. A nice value is user-specified and determines a job's priority. Why worry about the priority of your processes? Some of your long CPU-intensive jobs may be not as important as those of other users. You can be *nice* by adding `nice` in front of all your non-inportant jobs to give them lower priority. 
+Notice the PR (Priority) and NI (Niceness) columns in `htop`. A nice value is user-specified and determines a job's priority. Why worry about the priority of your processes? Some of your long CPU-intensive jobs may be not as important as those of other users. You can be *nice* by adding `nice` in front of all your non-important jobs to give them lower priority. 
 
 
 To run the `shovill` assembly job again in *low-priority mode* using `nice` you would run it like:
