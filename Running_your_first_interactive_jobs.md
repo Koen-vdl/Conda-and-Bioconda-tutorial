@@ -267,15 +267,17 @@ screen -list
 
 **7. Cleaning up after yourself**
 
+In case you won't be needing `shovill` in the future you can delete the `shovill` environment with:
+
+```
+conda deactivate
+conda remove -n shovill_env --all -y 
+```
+
 Running the following command will remove index cache, lock files, unused cache packages, and tarballs. This will free up a lot of storage space and won't affect your software environments in any way.
 
 ```
 conda clean --all -y
 ```
 
-In case you won't be needing `shovill` in the future you can delete the `shovill` environment with:
-
-```
-conda remove -n shovill_env --all -y 
-```
 
