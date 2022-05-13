@@ -12,7 +12,7 @@ conda install mamba -y
 mamba create -n shovill_env shovill -y
 ```
 
-Notice we added the `-y` argument to the conda installation command. This will skip the confirmation step during installation. We use this approach to win time during the tutorial. I normally would suggest you not to pass the confirmation step as it always has important info regarding the installation like which dependency will be installed or downgraded.
+Notice we added the `-y` argument to the `conda` / `mamba` installation command. This will skip the confirmation step during installation. We use this approach to win time during the tutorial. I normally would suggest you not to pass the confirmation step as it always has important info regarding the installation like which dependency will be installed or downgraded.
 
 We also need to copy over a *real* *Salmonella enterica subsp. enterica* serovar Paratyphi A paired-end read-set to play with. To save time during the tutorial we also produced artificial *fake* reads of a small fragment of the *real* Paratyphi genome. Let's first create a tutorial folder in your personal `/srv/` space and copy the `fake_R1.fq.gz`, `fake_R2.fq.gz`, `real_R1.fq.gz`, and `real_R2.fq.gz`files into it:
 
