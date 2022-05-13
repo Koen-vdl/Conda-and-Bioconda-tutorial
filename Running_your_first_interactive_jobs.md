@@ -1,11 +1,11 @@
 # Running your first interactive jobs
 
-In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use a real world example. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
+In this tutorial we will cover the basics of running your first interactive jobs on the server while effectively utilizing the computational resources available. Rather than falling back on typical tutorial examples that usually amount to printing `hello world` to your screen we will use a real world example. Here we will *de novo* assemble a *Salmonella enterica subsp. enterica* serovar Paratyphi A Illumina paired-end read-set to contigs using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. While you might not be working on bacterial AMR genomics the basic principles we illustrate here apply to most programs that are relevant in your field. 
 
 
 **1. Setting up software environments and copying over tutorial data**
 
-We will start by installing the required software environments using Conda as in the previous tutorial:
+We will start by installing the required software environments using `conda` as in the previous tutorial:
 
 ```
 conda create -n shovill_env shovill -y
@@ -21,7 +21,7 @@ cd /srv/$USER/tutorial_intro_to_comp_biology
 cp /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/*.fq.gz .
 ```
 
-Notice we use the `$USER` environment variable here to make the tutorial work for every participant. This environment variable contains your user name. You can print the value of the environment variable to the console with:
+Notice we use the `$USER` environment variable here to make the tutorial work for every participant. This environment variable contains your user name. You can print the value of the environment variable to the screen with:
 
 ```
 echo $USER
@@ -89,7 +89,7 @@ Let's take a look at the `shovill` output folder:
 ls -l assembly_job_1
 ```
 
-Here we find (among other files):a .log file (containing the progress information that was printed to the screen), an .gfa file (the assembly graph) and a file containing the assembly contigs (contigs.fa):
+Here we find (among other files):a .log file (containing the progress information that was printed to the screen), a .gfa file (the assembly graph) and a file containing the assembly contigs (contigs.fa):
 
 ```
 total 3596
@@ -118,7 +118,7 @@ Write down the walltime again to compare the time-gains made by allocating more 
 
 **3. Remotely Displaying GUI Applications with X11 forwarding**
 
-*X11 forwarding* provides a lightweight solution to remotely displaying graphical user interfaces (GUIs). The system on which the GUIs are to appear must be running a X11 server. `MobaXterm` comes with an X11 server baked into it so we don't need to congigure anything to display GUIs. Let's illustrate this by visualising the assembly graph of our shovill assembly using <a href="https://rrwick.github.io/Bandage/">Bandage</a>. Installing `Bandage` is a PITA as it doesn't have a `conda` recipe. You can add a version of `Bandage` that koen_vdl built from the source code to your `$PATH` with the following code:
+*X11 forwarding* provides a lightweight solution to remotely displaying graphical user interfaces (GUIs). The system on which the GUIs are to appear must be running a X11 server. `MobaXterm` comes with an X11 server baked into it so we don't need to configure anything to display GUIs. Let's illustrate this by visualising the assembly graph of our shovill assembly using <a href="https://rrwick.github.io/Bandage/">Bandage</a>. Installing `Bandage` is a PITA as it doesn't have a `conda` recipe. You can add a version of `Bandage` that koen_vdl built from the source code to your `$PATH` with the following code (the details of this are not important now):
 
 ```
 echo '# Add koen_vdl software to your $PATH' >> ~/.bash_profile
@@ -137,7 +137,7 @@ Click on the "Draw graph button" to visualise the assembly. The *spaghetti* repr
 
 **4. Understanding the job control commands**
 
-Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
+Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Return* key:
 
 ```
 shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 20 > /dev/null 2>&1
@@ -145,7 +145,7 @@ shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force -
 
 Notice that during the time the shovill job was running your terminal was *locked*. Your next command (your name) was only executed after the shovill job finished!
 
-To prevent locking up your terminal you can run a job in the *background* by entering an ampersand `&` symbol at the end of the command. This runs the command without occupying or locking the terminal window. The shell prompt is displayed immediately after you press Return.
+To prevent locking up your terminal you can run a job in the *background* by entering an ampersand `&` symbol at the end of the command. This runs the command without occupying or locking the terminal window. The shell prompt is displayed immediately after you press the *Return* key.
 
 
 To illustrate this lets run `shovill` once more but this time in the background:
@@ -183,9 +183,9 @@ The program shows a frequently updated list of all the processes currently runni
 ```
 htop
 ```
-Press the `q` key or `F10` to quit htop.
-
 `htop` is interactive via mouse (!) and keyboard. Try sorting on memory usage by clicking on the `MEM%` column header. 
+
+Press the `q` key or `F10` to quit htop.
 
 You can inspect your own running jobs with:
 
@@ -231,14 +231,13 @@ You can check your `screen` sessions with:
 screen -list
 ```
 
-This will print all your screen sessions. You should see one session you are currently *attached* to named -------.tutorial
+This will print a list of all your screen sessions to the screen. You should only see one session to which you are currently *attached* to named -------.tutorial
 
 ```
 There is a screen on:
         1893068.tutorial        (05/12/2022 10:34:36 PM)        (Attached)
 1 Socket in /run/screen/S-test.
 ```
-
 
 You must be tired running the same `shovill` job again but let's run it one last time with the *real* data. Notice the real read-set is about ten times the size of the fake set so this job will take longer to finish.
 
@@ -272,7 +271,7 @@ Running the following command will remove index cache, lock files, unused cache 
 conda clean --all -y
 ```
 
-In case you won't be needing `shovill` in the future you can delete these environments with:
+In case you won't be needing `shovill` in the future you can delete the `shovill` environment with:
 
 ```
 conda remove -n shovill_env --all -y 
