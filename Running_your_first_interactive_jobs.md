@@ -8,7 +8,8 @@ In this tutorial we will cover the basics of running your first interactive jobs
 We will start by installing the required software environments using `conda` as in the previous tutorial:
 
 ```
-conda create -n shovill_env shovill -y
+conda install mamba -y
+mamba create -n shovill_env shovill -y
 ```
 
 Notice we added the `-y` argument to the conda installation command. This will skip the confirmation step during installation. We use this approach to win time during the tutorial. I normally would suggest you not to pass the confirmation step as it always has important info regarding the installation like which dependency will be installed or downgraded.
