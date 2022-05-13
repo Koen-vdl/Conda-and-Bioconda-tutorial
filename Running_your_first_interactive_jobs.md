@@ -75,18 +75,35 @@ Wait, something went wrong, `shovill` is *smart* enough to realize we haven't al
 
 You won't always be this lucky. In most cases programs running out of memory just crash while spitting out a cryptic error message which usually mentions the word *memory*. In case you run into these errors the best course of action is taking a look at the basic documentation with the `--help` option to check if the default memory value can be manually increased. Notice the `shovill` documentation mentions the pipeline uses 16 GB of memory by default when `--ram` is not specified by the user.
 
-Lets make another attempt to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` with 4GB of RAM:
+Lets make another attempt to assemble `fake_R1.fq.gz` and `fake_R2.fq.gz` with 20GB of RAM:
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 4 
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 20 
 ```
 
 The job should finish to completion this time. Take note of the amount of time `shovill` took to finish by writing down the *walltime* (7'th last line printed to the screen).
 
-Lets now allocate more memory to `shovill` by giving it 20GB of RAM:
+Let's take a look at the `shovill` output folder:
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 20 
+ls -l assembly_job_1
+```
+
+Here we find (among other files):a .log file (containing the progress information that was printed to the screen), an .gfa file (the assembly graph) and a file containing the assembly contigs (contigs.fa):
+
+```
+total 3596
+-rw-rw-r-- 1 test test 1165470 May 13 15:22 contigs.fa
+-rw-rw-r-- 1 test test 1147165 May 13 15:22 contigs.gfa
+-rw-rw-r-- 1 test test     730 May 13 15:22 shovill.corrections
+-rw-rw-r-- 1 test test  194001 May 13 15:22 shovill.log
+-rw-rw-r-- 1 test test 1160028 May 13 15:22 spades.fasta
+```
+
+Lets now allocate more memory to `shovill` by giving it 50GB of RAM:
+
+```
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 1 --ram 50 
 ```
 
 Take note of the new walltime. Notice any difference? Adding excessive amounts of RAM doesn't speed programs up, it only does so when you didn't give a program enough memory to begin with. In that case the program will have to *swap* enormous amounts of code and data to the hard drive (which slows things down) to free up RAM for the executing code.
@@ -94,17 +111,36 @@ Take note of the new walltime. Notice any difference? Adding excessive amounts o
 As the `shovill` pipeline includes steps that can use multiple threads we will try to speed up the program by running it a third time with 10 threads. 
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 20 
 ```
 
 Write down the walltime again to compare the time-gains made by allocating more computer threads to your job. Impressive right?
 
-**3. Understanding the job control commands**
+**3. Remotely Displaying GUI Applications with X11 forwarding**
+
+*X11 forwarding* provides a lightweight solution to remotely displaying graphical user interfaces (GUIs). The system on which the GUIs are to appear must be running a X11 server. `MobaXterm` comes with an X11 server baked into it so we don't need to congigure anything to display GUIs. Let's illustrate this by visualising the assembly graph of our shovill assembly using <a href="https://rrwick.github.io/Bandage/">Bandage</a>. Installing `Bandage` is a PITA as it doesn't have a `conda` recipe. You can add a version of `Bandage` that koen_vdl built from the source code to your `$PATH` with the following code:
+
+```
+echo '# Add koen_vdl software to your $PATH' >> ~/.bash_profile
+echo 'PATH=/home/koen_vdl/bin/:$PATH' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
+Now start `Bandage` and load the assembly graph of your `shovill` job with:
+
+```
+Bandage_Ubuntu-x86-64_v0.9.0.AppImage load assembly_job_1/contigs.gfa
+```
+
+Click on the "Draw graph button" to visualise the assembly. The *spaghetti* represents assembled contigs connected by edges that usually represent problematic repeat regions the assembler couldn't resolve.
+
+
+**4. Understanding the job control commands**
 
 Up until now we have been running `shovill` in the *foreground*: we executed the command in the terminal window and the command occupied that terminal window until it completed. This is a foreground job. During this time the terminal window was *locked*: we couldn't enter anything in the shell prompt anymore. To illustrate this lets run `shovill` once more but this time while disabling distracting progress information being printed to the screen with `> /dev/null 2>&1` (which gets rid of any messages printed to the screen). Try writing something random (like your name) in the terminal while the below command is running and hitting the *Enter* key:
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 20 > /dev/null 2>&1
 ```
 
 Notice that during the time the shovill job was running your terminal was *locked*. Your next command (your name) was only executed after the shovill job finished!
@@ -115,7 +151,7 @@ To prevent locking up your terminal you can run a job in the *background* by ent
 To illustrate this lets run `shovill` once more but this time in the background:
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1 --force --cpus 10 --ram 20 > /dev/null 2>&1 &
 ```
 
 Kinda nice not to lock up your terminal anymore right?
@@ -123,8 +159,8 @@ Kinda nice not to lock up your terminal anymore right?
 We can use what we just learned to run multiple jobs simultaneously. Let's execute the `shovill` job 2 times simultaneously in the background. We will follow up all jobs running in the background with the command `jobs`. 
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 20 > /dev/null 2>&1 &
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 20 > /dev/null 2>&1 &
 jobs
 
 ```
@@ -132,10 +168,10 @@ jobs
 Pretty sweet right? Let's now imagine the shovill job would take 24h to finish and we just started it with a wrong option! Luckily we can stop a running job with the key combination `CTRL + C`. Try that now with the below command: run it and kill immediately it with `CTRL + C`.
 
 ```
-shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 4 > /dev/null 2>&1
+shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_1  --force --cpus 10 --ram 20 > /dev/null 2>&1
 ```
 
-**4. Monitoring your jobs**
+**5. Monitoring your jobs**
 
 Once you have an analysis running, it's important to monitor your software to determine whether it is effectively utilizing the computational resources you have allocated to it. Understanding what resources your pipeline utilizes can help you scale up/down your compute so that you are not wasting resources or hitting resource limits that may slow down your pipeline. Many bioinformatic pipelines are “bursty” in nature, meaning different steps in a single pipeline may have vastly different computing requirements. Some steps/tools may have high memory requirements but only utilize a small number of threads, while others may multithread quite well across a large number of threads but require minimal memory.
 
@@ -163,10 +199,10 @@ Notice the PR (Priority) and NI (Niceness) columns in `htop`. A nice value is us
 To run the `shovill` assembly job again in *low-priority mode* using `nice` you would run it like:
 
 ```
-nice shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 4 > /dev/null 2>&1 &
+nice shovill --R1 fake_R1.fq.gz --R2 fake_R2.fq.gz --outdir assembly_job_2  --force --cpus 10 --ram 20 > /dev/null 2>&1 &
 ```
 
-**5. Running your analysis in SCREEN**
+**6. Running your analysis in SCREEN**
 
 A loss of connection or closing of the terminal unintentionally terminates the process you were working on. This can be disastrous when you are in the middle of a long job or when you were moving or coping large files. The `screen` command is very useful to avoid such situations.  Once the terminal is activated using `screen` anything in that terminal stays running even if you log out. This is a perfect solution for running long jobs on the server. 
 
@@ -228,7 +264,7 @@ When you now check on your screen sessions there should be non listed:
 screen -list
 ```
 
-**5. Cleaning up after yourself**
+**7. Cleaning up after yourself**
 
 Running the following command will remove index cache, lock files, unused cache packages, and tarballs. This will free up a lot of storage space and won't affect your software environments in any way.
 
