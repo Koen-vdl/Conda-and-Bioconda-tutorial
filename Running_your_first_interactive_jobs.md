@@ -125,6 +125,7 @@ Write down the walltime again to compare the time-gains made by allocating more 
 echo '# Add koen_vdl software to your $PATH' >> ~/.bash_profile
 echo 'PATH=/home/koen_vdl/bin/:$PATH' >> ~/.bash_profile
 source ~/.bash_profile
+conda activate shovill_env
 ```
 
 Now start `Bandage` and load the assembly graph of your `shovill` job with:
