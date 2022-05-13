@@ -5,7 +5,7 @@ In this tutorial we will cover the basics of running your first interactive jobs
 
 **1. Setting up software environments and copying over tutorial data**
 
-We will start by installing the required software environments using `conda` as in the previous tutorial. We will however speed things up my using `mamba`, a reimplementation of the conda package manager in C++. `mamba` considerably speeds up `conda` by parallel downloading of repository data and package files using multi-threading and faster dependency solving. Not to worry though: `mamba` utilizes the same command as `conda` to stay as compatible as possible. Let's first install `mamba` and then use it to install a `shovill` software environment:
+We will start by installing the required software environments as in the previous tutorial. We will however speed things up by using `mamba`, a reimplementation of the conda package manager in C++. `mamba` considerably speeds up `conda` by parallel downloading of repository data and package files and faster dependency solving. Not to worry though: `mamba` utilizes the same commands as `conda` to stay as compatible as possible. Let's first install `mamba` and then use it to install a `shovill` software environment:
 
 ```
 conda install mamba -y
