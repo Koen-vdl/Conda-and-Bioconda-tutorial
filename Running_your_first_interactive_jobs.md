@@ -134,7 +134,7 @@ Now start `Bandage` and load the assembly graph of your `shovill` job with:
 Bandage_Ubuntu-x86-64_v0.9.0.AppImage load assembly_job_1/contigs.gfa &
 ```
 
-Click on the "Draw graph button" to visualise the assembly. The *spaghetti* represents assembled contigs connected by edges that usually represent problematic repeat regions the assembler couldn't resolve.
+Click on the "Draw graph button" to visualise the assembly. The *spaghetti* represents assembled contigs connected by edges that usually represent problematic repeat regions the assembler couldn't resolve. Close down `Bandage`to continue with the tutorial. 
 
 
 **4. Understanding the job control commands**
