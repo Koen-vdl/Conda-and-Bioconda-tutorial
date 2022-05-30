@@ -114,7 +114,7 @@ The above example defines the variable KING and assigns the value `Jayavarman_VI
 echo $KING
 ```
 
-Now we know how to define and access a variable, we need a way to execute a set of commands repeatedly. A `for` loop is a bash programming language statement which allows code to be repeatedly executed. If you already have a programming or scripting background, you're probably familiar with what for loops do. If you're not, lets break it down in plain English: `FOR` a given set of items, `DO` a thing, until you're `DONE`. Let's take a look at the below shell script: we use a variable `id` that changes over a range from 1 to 5. All the script does is printing the current value of `id` after which it waits 2 seconds with `sleep`. 
+Now we know how to define and access a variable, we need a way to execute a set of commands repeatedly. A `for` loop is a bash programming language statement which allows code to be repeatedly executed. If you already have a programming or scripting background, you're probably familiar with what for loops do. If you're not, lets break it down in plain English: `FOR` a given set of items, `DO` a thing, until you're `DONE`. Let's take a look at the below shell script: we use a variable `id` that changes over a range from 1 to 5. All the script does is print the current value of `id` to the screeb after which it waits 2 seconds with `sleep`. 
 
 ```
 for id in 1 2 3 4 5
@@ -124,13 +124,13 @@ do
 done
 ```
 
-A better way of executing scripts like the one above is to write them to a *script file* as running our commands directly in the terminal leaves no trace of what we executed. Let's paste the script we ran above to a file `my_first_script.bash` using the text editor `nano`.
+A better way of executing scripts like the one above is to write them to a *script file* as running our commands directly in the terminal leaves no trace of what we executed. Let's produce such a script file `my_first_script.bash` using the text editor `nano`.
 
-``
+```
 nano my_first_script.bash
-``
+```
 
-Exit and save with `CTRL+x` and confirm the save with `y` followed by pressing the `return` key. 
+Let's paste the script we ran above into the text editor. Exit and save `nano` with `CTRL+x`, confirm the save with `y` followed by pressing the `return` key. 
 
 Let's now execute our script with:
 
@@ -138,7 +138,7 @@ Let's now execute our script with:
 bash my_first_script.bash
 ```
 
-We see the same output is being printed to the screen. Unlike before though, we hold on to the commands we used to produce the output.
+We see the same output is being printed to the screen. Unlike before though, we hold on to the commands we used to produce the output (in the form of the `my_first_script.bash` script).
 
 **3. Running the ARTIC pipeline the easy way**
 
