@@ -172,7 +172,7 @@ Let's now execute our script with:
 bash my_artic_script.bash
 ```
 
-Notice the last line of the script concatenates all 5 consensus sequences into a multi-fasta file. Have a look using `less` (to quit `less` press the `q` key)
+Notice the last line of the script concatenates all 5 consensus sequences into a multi-fasta file. Have a look at the file using `less`. To scroll down/up in `less` use the `PgDn`/`PgUp`key. To quit `less` press the `q` key.
 
 ```
 less /srv/$USER/tutorial_intro_to_comp_biology/ARTIC_output/all_5_consensus-sequences.fasta
@@ -186,11 +186,11 @@ Hopefully, this tutorial has demonstrated the power of a for loop. You really ca
 You can remove files we used in this tutorial from your storage with:
 
 ```
-rm -r /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/GridION_SCV2_MN_fastq_pass/
-rm -r /srv/koen_vdl/Into_To_Comp_Bio_Tutorial_Files/ARTIC_primer_schemes/
+rm -r /srv/$USER/Into_To_Comp_Bio_Tutorial_Files/GridION_SCV2_MN_fastq_pass/
+rm -r /srv/$USER/Into_To_Comp_Bio_Tutorial_Files/ARTIC_primer_schemes/
 rm -r /srv/$USER/tutorial_intro_to_comp_biology/ARTIC_output/
-
 ```
+
 In case you won't be needing `artic` in the future you can delete the environment with:
 
 ```
