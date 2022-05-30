@@ -20,7 +20,7 @@ conda create -n artic-ncov2019_env --file /srv/koen_vdl/Into_To_Comp_Bio_Tutoria
 
 Tip: this installation approach represents a convenient way to share a custom environment with collaborators. Simply activate the environment you wish to share, run `conda list --explicit > spec-file.txt`, and share the `spec-file.txt` with your collaborator.
 
-We also need to copy over some data for the tutorial. The `GridION_SCV2_MN_fastq_pass` folder contains 5 demultiplexed barcoded ONT read-sets straight off the GridION. While in a normal run we can sequence up to 96 samples, we limit the tutorial to 5 samples. The `ARTIC_primer_schemes` folder contains the tiled, multiplexed primer scheme of the ARTIC Midnight protocol. 
+We also need to copy over some data for the tutorial. The `GridION_SCV2_MN_fastq_pass` folder contains 5 demultiplexed barcoded ONT read-sets straight off the GridION. While in a normal run The GridION can sequence up to 96 samples, we limit the tutorial to 5 samples. The `ARTIC_primer_schemes` folder contains the tiled, multiplexed primer scheme of the ARTIC Midnight protocol. 
 
 ```
 mkdir /srv/$USER/tutorial_intro_to_comp_biology
