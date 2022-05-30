@@ -106,7 +106,6 @@ You can define a variable `KING` as follows:
 
 ```
 KING=Jayavarman_VII
-
 ```
 
 The above example defines the variable KING and assigns the value `Jayavarman_VII` to it. Variables of this type are called *scalar* variables. A scalar variable can hold only one value at a time. To access the value stored in a variable, prefix its name with the dollar sign ($). To print the value of `KING` run:
