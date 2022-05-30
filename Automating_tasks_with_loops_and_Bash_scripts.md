@@ -2,7 +2,7 @@
 
 The Bash shell is one of the most compelling reasons to use Linux. Users can interact with Bash through the command line, and write scripts to automate tasks. Although this may sound intimidating to beginning users, it is not hard to get started with Bash scripting. In this tutorial, we will take you through an example of a Bash script to show you what it is capable of.
 
-### In this tutorial you will learn:
+In this tutorial you will learn:
 
 1. How to write your first Bash script
 2. How to use variables in Bash
