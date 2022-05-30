@@ -186,8 +186,8 @@ Hopefully, this tutorial has demonstrated the power of a for loop. You really ca
 You can remove files we used in this tutorial from your storage with:
 
 ```
-rm -r /srv/$USER/Into_To_Comp_Bio_Tutorial_Files/GridION_SCV2_MN_fastq_pass/
-rm -r /srv/$USER/Into_To_Comp_Bio_Tutorial_Files/ARTIC_primer_schemes/
+rm -r /srv/$USER/tutorial_intro_to_comp_biology/GridION_SCV2_MN_fastq_pass/
+rm -r /srv/$USER/tutorial_intro_to_comp_biology/ARTIC_primer_schemes/
 rm -r /srv/$USER/tutorial_intro_to_comp_biology/ARTIC_output/
 ```
 
