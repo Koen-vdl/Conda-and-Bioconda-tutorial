@@ -205,6 +205,7 @@ We add the channels with the `conda config` command. The order in which we add t
 (base) >$ conda config --add channels defaults
 (base) >$ conda config --add channels bioconda
 (base) >$ conda config --add channels conda-forge
+(base) >$ conda config --set channel_priority strict
 ```
 To check that it worked you can look at the Conda configuration using:
 
