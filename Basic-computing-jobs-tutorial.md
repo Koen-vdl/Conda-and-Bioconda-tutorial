@@ -23,10 +23,10 @@ Remember to activate your environment everytime when you need to run Beast2. It 
 
 **2. Getting the data**
 
-Before we can start running an analysis with BEAST2, as mentioned earlier, we need Beauti2 to generate BEAST2 XML configuration files. First of all, you need to have the input data containing DNA sequences of your interest in nexus or fasta format and import an alignment to Beauti2. This tutorial will guide you only how to run Beast2 so you can download *'Primates.xml'* file from this link; https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/Primates.xml by running a single command line as below.
+Before we can start running an analysis with BEAST2, as mentioned earlier, we need Beauti2 to generate BEAST2 XML configuration files. First of all, you need to have the input data containing DNA sequences of your interest in nexus or fasta format and import an alignment to Beauti2. This tutorial will guide you only how to run Beast2 so you can download *'primate-mtDNA.xml'* file from this link https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/primate-mtDNA.xml;  by running a single command line as below.
 
 ```
-wget [https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/Primates.xml](https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/primate-mtDNA.xml)
+wget https://raw.githubusercontent.com/taming-the-beast/Introduction-to-BEAST2/master/xml/primate-mtDNA.xml
 ```
 When you are ready, type the command line below to check if you have the file in your directory.
 
